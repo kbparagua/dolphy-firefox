@@ -1,8 +1,10 @@
 (function(scope){
 
-  var ANIMATION_DELAY = 150;
+  var ANIMATION_DELAY = 100,
+      RIGHT_MARGIN = 20;
 
   var self = scope.Suggestion = function(){
+    this.$body = $(document.body);
     this.$el = null;
     this.$comboBox = null;
     this.$options = null;
@@ -68,7 +70,8 @@
   //
 
   p.show = function(combo){
-    var _this = this;
+    var _this = this,
+        bodyNewLeft = this._width + RIGHT_MARGIN;
 
     this.$comboBox.val(combo);
 
@@ -79,15 +82,21 @@
 
       _this._updateOptions();
     });
+
+
+    this.$body.animate({'padding-left': bodyNewLeft}, ANIMATION_DELAY);
   };
 
 
   p.hide = function(){
-    var _this = this;
+    var _this = this,
+        hiddenPostion = -(this._width + RIGHT_MARGIN);
 
-    this.$el.animate({left: -this._width}, ANIMATION_DELAY, function(){
+    this.$el.animate({left: hiddenPostion}, ANIMATION_DELAY, function(){
       _this._shown = false;
     });
+
+    this.$body.animate({'padding-left': 0}, ANIMATION_DELAY);
   };
 
 

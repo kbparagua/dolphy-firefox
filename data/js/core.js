@@ -12,8 +12,6 @@
   self.prototype.start = function(){
     var _this = this;
 
-    console.log('Dolphy Core started.');
-
     this._comboListener.listenToAll( TEXTAREA_SELECTORS.join(', ') );
 
     this._showSuggestionsOnCombo();
@@ -26,8 +24,6 @@
     var _this = this;
 
     this._comboListener.onCombo(function(combo){
-      console.log('Combo detected: ' + combo);
-
       if ( !_this._suggestion.isRendered() ) _this._suggestion.render();
       _this._suggestion.show(combo);
     });
