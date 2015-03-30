@@ -13,9 +13,21 @@
   };
 
 
+  global._Dolphy.setSource = function(source){
+    this._source = source;
+  };
+
+
   // Temporary
   global._Dolphy.getSource = function(){
-    return this.TEST_SOURCE;
+    return this._source || this.TEST_SOURCE;
   };
+
+
+
+  self.port.on('setSource', function(source){
+    global._Dolphy.setSource(source);
+  });
+
 
 })(this);
