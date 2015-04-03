@@ -26,7 +26,6 @@
     this._comboListener.onCombo(function(combo){
       if ( !_this._suggestion.isRendered() ) _this._suggestion.render();
 
-      console.log('show suggestions for combo: ' + combo);
       _this._suggestion.show(combo);
     });
   };
