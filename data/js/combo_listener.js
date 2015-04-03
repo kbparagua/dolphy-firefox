@@ -5,7 +5,7 @@
 (function(scope){
   var INTERPRETATION_DELAY = 1000;
 
-  var COMBO_STARTER_KEY = '?'.charCodeAt(0);
+  var COMBO_STARTER_KEY = '!'.charCodeAt(0);
       VALID_KEYS = [COMBO_STARTER_KEY];
 
   //
