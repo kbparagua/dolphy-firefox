@@ -1,9 +1,9 @@
 {
-  "name": "dolphy-firefox",
-  "title": "dolphy-firefox",
+  "name": "dolphy",
+  "title": "Dolphy",
   "id": "jid1-A7961nflEHIoDA",
-  "description": "a basic add-on",
-  "author": "",
+  "description": "Reaction GIF autocomplete for Github.",
+  "author": "Karl Paragua",
   "license": "MPL 2.0",
   "version": "0.1"
 }

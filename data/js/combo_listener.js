@@ -96,8 +96,6 @@
     var value = this._$currentTarget.val();
     if ( $.trim(value) === '' ) return;
 
-    console.log('Start Interpretation...');
-
     var leftPart = this._getComboLeftPart(value),
         combination = leftPart + this._getComboRightPart(value);
 
