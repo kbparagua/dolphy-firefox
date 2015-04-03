@@ -1,6 +1,7 @@
 (function(scope){
 
-  var ARROW_UP_KEY = 38,
+  var RETURN_KEY = 13,
+      ARROW_UP_KEY = 38,
       ARROW_DOWN_KEY = 40;
 
   var ANIMATION_DELAY = 100,
@@ -40,6 +41,7 @@
     // Add event listeners.
     this._updateOptionsOnComboChange();
     this._selectOptionOnClick();
+    this._selectOptionOnEnter();
     this._focusOptionWithArrowKeys();
     this._focusOptionOnHover();
 
@@ -121,6 +123,20 @@
       e.preventDefault();
 
       if ( _this._onSelect ){ _this._onSelect(combo, url); }
+    });
+  };
+
+
+  p._selectOptionOnEnter = function(){
+    var _this = this;
+
+    this.$el.on('keypress', function(e){
+      if ( e.which !== RETURN_KEY ) return;
+
+      e.preventDefault();
+
+      var $focused = _this._$focusedOption();
+      if ( $focused.length ) $focused.trigger('click');
     });
   };
 
@@ -214,6 +230,8 @@
 
     var $first = this.$options.find('.js-dolphy-option:first');
     if ( $first.length ) this._focusOption($first);
+
+    this.$optionsContainer.scrollTop(0);
   };
 
 
