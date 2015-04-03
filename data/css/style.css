@@ -33,10 +33,15 @@
 /* Option */
 
 
-.dolphy-options {
+.dolphy-options-container {
   overflow-y: auto;
   height: 90%;
+  min-height: 500px;
   width: 100%;
+}
+
+.dolphy-options {
+  position: relative;
 }
 
 
@@ -58,6 +63,7 @@
 
 
 .dolphy-option .dolphy-combo {
+  display: block;
   width: 100%;
 
   font-family: Arial;
@@ -83,3 +89,7 @@
   color: #2ecc71;
 }
 
+
+.dolphy-combo:hover {
+  text-decoration: none;
+}

@@ -1,5 +1,8 @@
 (function(scope){
 
+  var ARROW_UP_KEY = 38,
+      ARROW_DOWN_KEY = 40;
+
   var ANIMATION_DELAY = 100,
       RIGHT_MARGIN = 20;
 
@@ -9,6 +12,7 @@
     this.$body = $(document.body);
     this.$el = null;
     this.$comboBox = null;
+    this.$optionsContainer = null;
     this.$options = null;
     this._width = 0;
 
@@ -36,6 +40,7 @@
     // Add event listeners.
     this._updateOptionsOnComboChange();
     this._selectOptionOnClick();
+    this._focusOptionWithArrowKeys();
     this._focusOptionOnHover();
 
     this._width = this.$el.width();
@@ -77,8 +82,28 @@
 
 
   p._focusOptionWithArrowKeys = function(){
+    var _this = this;
+
     this.$el.on('keydown', function(e){
-      console.log(e.which);
+      var key = e.which;
+
+      if ( [ARROW_UP_KEY, ARROW_DOWN_KEY].indexOf(key) < 0 ) return;
+
+      e.preventDefault();
+
+      var $focused = _this._$focusedOption();
+      var $focusOn =
+            key === ARROW_UP_KEY ?
+              $focused.prev('.js-dolphy-option') :
+              $focused.next('.js-dolphy-option');
+
+      if ( !$focusOn.length ) return;
+
+      _this._focusOption($focusOn);
+      _this.$optionsContainer.animate(
+        {scrollTop: $focusOn.position().top},
+        ANIMATION_DELAY
+      );
     });
   };
 
@@ -170,6 +195,11 @@
   //
   //
 
+  p._$focusedOption = function(){
+    return this.$options.find('.js-dolphy-option.focus:first');
+  };
+
+
   p._focusOption = function($option){
     this.$options.find('.js-dolphy-option').removeClass('focus');
     $option.addClass('focus');
@@ -181,12 +211,15 @@
     this.$options.empty();
 
     for ( var combo in options ) this._appendOption(combo, options[combo]);
+
+    var $first = this.$options.find('.js-dolphy-option:first');
+    if ( $first.length ) this._focusOption($first);
   };
 
 
   p._appendOption = function(combo, url){
     var $option = $('<a>', {class: buildClasses('option'), href: '#'}),
-        $combo = $('<div>', {class: buildClasses('combo')}),
+        $combo = $('<a>', {class: buildClasses('combo'), href: '#'}),
         $img = $('<img>', {class: buildClasses('img'), src: url});
 
     $option.append($img);
@@ -218,21 +251,22 @@
 
 
   p._buildElements = function(){
-    var classes = {
-      el: 'suggestion',
-      comboBox: 'combo-box',
-      options: 'options'
-    };
+    this.$el = $('<div>', {class: buildClasses('suggestion')});
 
-    this.$el = $('<div>', {class: buildClasses( classes.el )});
-    this.$options = $('<div>', {class: buildClasses( classes.options )});
+    this.$optionsContainer =
+      $('<div>', {class: buildClasses('options-container') });
+
+    this.$options = $('<div>', {class: buildClasses('options')});
+
+    this.$optionsContainer.append( this.$options );
+
     this.$comboBox =
       $('<input>', {
         type: 'text',
-        class: buildClasses( classes.comboBox )
+        class: buildClasses('combo-box')
       });
 
-    this.$el.append( this.$comboBox ).append( this.$options );
+    this.$el.append( this.$comboBox ).append( this.$optionsContainer );
   };
 
 
