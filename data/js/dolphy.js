@@ -2,16 +2,6 @@
 
   global._Dolphy = global._Dolphy || {};
 
-  //
-  // Test Source
-  //
-
-  global._Dolphy.TEST_SOURCE = {
-    'bruce': './test/bruce.jpg',
-    'winner-dance': './test/winner-dance.gif',
-    'kermit-type': './test/kermit-type.gif'
-  };
-
 
   global._Dolphy.setSource = function(page){
     var source = {};
@@ -33,7 +23,7 @@
 
   // Temporary
   global._Dolphy.getSource = function(){
-    return this._source || this.TEST_SOURCE;
+    return this._source;
   };
 
 
