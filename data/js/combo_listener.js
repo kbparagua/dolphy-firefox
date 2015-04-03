@@ -57,18 +57,22 @@
   p.replaceCurrentCombo = function(replacement){
     if ( !this._$currentTarget ) return;
 
+    this._$currentTarget.focus();
+
     var value = this._$currentTarget.val(),
         leftPart = value.substring(0, this._currentComboStart),
         rightPart = value.substring(this._currentComboEnd + 1, value.length),
         newValue = leftPart + replacement + rightPart;
 
     this._$currentTarget.val(newValue);
+
+    // Put selection cursor to the end of the replacement.
+    var selectionCursor = this._currentComboStart + replacement.length;
+
+    this._$currentTarget[0].selectionStart = selectionCursor;
+    this._$currentTarget[0].selectionEnd = selectionCursor;
   };
 
-
-  p.focusOnTarget = function(){
-    this._$currentTarget.focus();
-  };
 
 
 

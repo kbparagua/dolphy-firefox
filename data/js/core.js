@@ -55,7 +55,6 @@
           markdown = ['!', comboPart, urlPart].join('');
 
       _this._comboListener.replaceCurrentCombo(markdown);
-      _this._comboListener.focusOnTarget();
 
       _this._suggestion.hide();
     });
