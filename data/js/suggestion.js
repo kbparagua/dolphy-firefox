@@ -76,6 +76,13 @@
   };
 
 
+  p._focusOptionWithArrowKeys = function(){
+    this.$el.on('keydown', function(e){
+      console.log(e.which);
+    });
+  };
+
+
   p._selectOptionOnClick = function(){
     var _this = this;
 
@@ -97,10 +104,7 @@
     var _this = this;
 
     this.$options.on('mouseover', '.js-dolphy-option', function(){
-      var $option = $(this);
-
-      _this.$options.find('.js-dolphy-option').removeClass('focus');
-      $option.addClass('focus');
+      _this._focusOption( $(this) );
     });
   };
 
@@ -165,6 +169,12 @@
   // Options
   //
   //
+
+  p._focusOption = function($option){
+    this.$options.find('.js-dolphy-option').removeClass('focus');
+    $option.addClass('focus');
+  };
+
 
   p._updateOptions = function(){
     var options = this._options();
