@@ -4,6 +4,8 @@
       RIGHT_MARGIN = 20;
 
   var self = scope.Suggestion = function(){
+    this._currentCombo = null;
+
     this.$body = $(document.body);
     this.$el = null;
     this.$comboBox = null;
@@ -27,23 +29,14 @@
 
 
   p.render = function(){
-    var _this = this;
-
     this._buildElements();
 
     $(document.body).append( this.$el );
 
-    this.$comboBox.on('keyup', function(){ _this._updateOptions(); });
-
-    this.$options.on('click', '.js-dolphy-option', function(e){
-      var $option = $(e.currentTarget),
-          $img = $option.find('.js-dolphy-img:first'),
-          $combo = $option.find('.js-dolphy-combo:first'),
-          url = $img.prop('src'),
-          combo = $combo.text();
-
-      if ( _this._onSelect ){ _this._onSelect(combo, url); }
-    });
+    // Add event listeners.
+    this._updateOptionsOnComboChange();
+    this._selectOptionOnClick();
+    this._focusOptionOnHover();
 
     this._width = this.$el.width();
     this._rendered = true;
@@ -65,11 +58,65 @@
 
   //
   //
+  // Event Handlers
+  //
+  //
+
+  p._updateOptionsOnComboChange = function(){
+    var _this = this;
+
+    this.$comboBox.on('keyup', function(){
+      var comboBoxValue = _this.$comboBox.val();
+
+      if ( _this._currentCombo === comboBoxValue ) return;
+
+      _this._currentCombo = comboBoxValue;
+      _this._updateOptions();
+    });
+  };
+
+
+  p._selectOptionOnClick = function(){
+    var _this = this;
+
+    this.$options.on('click', '.js-dolphy-option', function(e){
+      var $option = $(e.currentTarget),
+          $img = $option.find('.js-dolphy-img:first'),
+          $combo = $option.find('.js-dolphy-combo:first'),
+          url = $img.prop('src'),
+          combo = $combo.text();
+
+      e.preventDefault();
+
+      if ( _this._onSelect ){ _this._onSelect(combo, url); }
+    });
+  };
+
+
+  p._focusOptionOnHover = function(){
+    var _this = this;
+
+    this.$options.on('mouseover', '.js-dolphy-option', function(){
+      var $option = $(this);
+
+      _this.$options.find('.js-dolphy-option').removeClass('focus');
+      $option.addClass('focus');
+    });
+  };
+
+
+
+
+
+  //
+  //
   // Visibility
   //
   //
 
   p.show = function(combo){
+    this._currentCombo = combo;
+
     var _this = this,
         bodyNewLeft = this._width + RIGHT_MARGIN;
 
@@ -128,7 +175,7 @@
 
 
   p._appendOption = function(combo, url){
-    var $option = $('<div>', {class: buildClasses('option')}),
+    var $option = $('<a>', {class: buildClasses('option'), href: '#'}),
         $combo = $('<div>', {class: buildClasses('combo')}),
         $img = $('<img>', {class: buildClasses('img'), src: url});
 

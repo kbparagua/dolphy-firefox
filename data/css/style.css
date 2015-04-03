@@ -41,6 +41,7 @@
 
 
 .dolphy-option {
+  display: block;
   margin-bottom: 4px;
   margin-top: 4px;
   border: solid 8px white;
@@ -69,16 +70,16 @@
 }
 
 
-.dolphy-option:hover {
+.dolphy-option.focus {
   border-color: #2ecc71;
 }
 
 
-.dolphy-option:hover .dolphy-img {
+.dolphy-option.focus .dolphy-img {
   opacity: 1;
 }
 
-.dolphy-option:hover .dolphy-combo {
+.dolphy-option.focus .dolphy-combo {
   color: #2ecc71;
 }
 
