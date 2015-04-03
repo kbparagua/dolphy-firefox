@@ -66,6 +66,10 @@
   };
 
 
+  p.focusOnTarget = function(){
+    this._$currentTarget.focus();
+  };
+
 
 
 
