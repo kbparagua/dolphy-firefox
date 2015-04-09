@@ -237,8 +237,14 @@
 
   p._appendOption = function(combo, url){
     var $option = $('<a>', {class: buildClasses('option'), href: '#'}),
-        $combo = $('<a>', {class: buildClasses('combo'), href: '#'}),
-        $img = $('<img>', {class: buildClasses('img'), src: url});
+        $combo = $('<a>', {class: buildClasses('combo'), href: '#'});
+
+    var $img =
+      $('<img>', {
+        class: buildClasses('img'),
+        'data-url': url,
+        src: ''
+      });
 
     $option.append($img);
     $option.append($combo);
