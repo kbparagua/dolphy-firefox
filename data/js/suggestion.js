@@ -1,5 +1,14 @@
 (function(scope){
 
+
+  var BLANK_IMG_URL = null;
+
+  self.port.on('setBlankImageURL', function(url){
+    BLANK_IMG_URL = url;
+  });
+
+
+
   var RETURN_KEY = 13,
       ARROW_UP_KEY = 38,
       ARROW_DOWN_KEY = 40;
@@ -7,7 +16,7 @@
   var ANIMATION_DELAY = 100,
       RIGHT_MARGIN = 20;
 
-  var self = scope.Suggestion = function(){
+  var _self = scope.Suggestion = function(){
     this._currentCombo = null;
 
     this.$body = $(document.body);
@@ -23,14 +32,14 @@
   };
 
 
-  self.ELEMENTS_CLASS_NAME = 'dolphy';
-  self.ELEMENT_CLASS = '.' + self.ELEMENTS_CLASS_NAME;
+  _self.ELEMENTS_CLASS_NAME = 'dolphy';
+  _self.ELEMENT_CLASS = '.' + _self.ELEMENTS_CLASS_NAME;
 
 
 
 
 
-  var p = self.prototype;
+  var p = _self.prototype;
 
 
   p.render = function(){
@@ -243,7 +252,7 @@
       $('<img>', {
         class: buildClasses('img'),
         'data-url': url,
-        src: ''
+        src: BLANK_IMG_URL
       });
 
     $option.append($img);
@@ -298,7 +307,7 @@
     var css = 'dolphy-' + base,
         js = 'js-' + css;
 
-    return [self.ELEMENTS_CLASS_NAME, js, css].join(' ');
+    return [_self.ELEMENTS_CLASS_NAME, js, css].join(' ');
   };
 
 })( this._Dolphy );
