@@ -54,6 +54,9 @@
     this._focusOptionWithArrowKeys();
     this._focusOptionOnHover();
 
+    var lazyloader = new scope.Lazyloader('.js-dolphy-img');
+    lazyloader.listenTo( this.$optionsContainer );
+
     this._width = this.$el.width();
     this._rendered = true;
   };
@@ -252,7 +255,8 @@
       $('<img>', {
         class: buildClasses('img'),
         'data-url': url,
-        src: BLANK_IMG_URL
+        src: BLANK_IMG_URL,
+        alt: combo
       });
 
     $option.append($img);
