@@ -20,27 +20,27 @@
 
 
   p._load = function(){
-    console.log('loading...');
+    console.log('---------------------------------------------------');
+    console.log('LOADING');
+    console.log('Viewable Area: 0 - ' + this._$container.height());
+    console.log('---------------------------------------------------');
 
     var _this = this;
-
-    // console.log('container height: ' + this._$container.height());
 
     $( this._imgSelector ).each(function(index, img){
       var $img = $(img),
           top = $img.position().top,
           alt = $img.prop('alt');
 
-      console.log('checking image: ' + alt);
-      console.log('--> top: ' + top);
+      console.log('checking image: ' + alt + ', top: ' + top);
 
-      if ( top < _this._$container.height() ){
+      if ( top < _this._$container.height() && top >= 0 ){
         var realSource = $img.data('url');
 
         console.log('--> entered viewable area');
 
         if ( $img.prop('src') === realSource ) return;
-        console.log('--> load!');
+        console.log('--> LOAD!');
 
         $img.prop('src', realSource);
       }

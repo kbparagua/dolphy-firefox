@@ -16,6 +16,9 @@
   var ANIMATION_DELAY = 100,
       RIGHT_MARGIN = 20;
 
+  var OPTION_BORDER_WIDTH = 5;
+
+
   var _self = scope.Suggestion = function(){
     this._currentCombo = null;
 
@@ -113,9 +116,13 @@
 
       if ( !$focusOn.length ) return;
 
+      var optionTop = ($focusOn.position().top - OPTION_BORDER_WIDTH),
+          currentScrollTop = _this.$optionsContainer.scrollTop(),
+          newTop = optionTop + currentScrollTop;
+
       _this._focusOption($focusOn);
       _this.$optionsContainer.animate(
-        {scrollTop: $focusOn.position().top},
+        {scrollTop: newTop},
         ANIMATION_DELAY
       );
     });
