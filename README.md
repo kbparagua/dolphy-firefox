@@ -8,12 +8,16 @@ Dolphy is a Firefox browser addon that enables Github users to instantly add Rea
 
 ![dolphy-screenshot](https://dl.dropboxusercontent.com/u/2196080/dolphy-screenshot.png)
 
+## Installation
+
+Download the plugin [here](https://addons.mozilla.org/en-US/firefox/addon/dolphy/).
+
 ## Usage
 
 1. Trigger autocomplete by typing `!`.
-2. Use the mouse or arrow keys to select a GIF from the shown sidebar.
-3. Click the GIF or press enter to insert it to the Github's text area.
-4. Enjoy!
+1. Use the mouse or arrow keys to select a GIF from the shown sidebar.
+1. Click the GIF or press enter to insert it to the Github's text area.
+1. Enjoy!
 
 
 ## I want more Reaction GIF!
