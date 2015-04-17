@@ -1,5 +1,14 @@
 (function(scope){
 
+
+  var BLANK_IMG_URL = null;
+
+  self.port.on('setBlankImageURL', function(url){
+    BLANK_IMG_URL = url;
+  });
+
+
+
   var RETURN_KEY = 13,
       ARROW_UP_KEY = 38,
       ARROW_DOWN_KEY = 40;
@@ -7,7 +16,10 @@
   var ANIMATION_DELAY = 100,
       RIGHT_MARGIN = 20;
 
-  var self = scope.Suggestion = function(){
+  var OPTION_BORDER_WIDTH = 5;
+
+
+  var _self = scope.Suggestion = function(){
     this._currentCombo = null;
 
     this.$body = $(document.body);
@@ -20,17 +32,19 @@
     this._rendered = false;
     this._shown = false;
     this._onSelect = null;
+
+    this._lazyLoader = new scope.LazyLoader('.js-dolphy-img');
   };
 
 
-  self.ELEMENTS_CLASS_NAME = 'dolphy';
-  self.ELEMENT_CLASS = '.' + self.ELEMENTS_CLASS_NAME;
+  _self.ELEMENTS_CLASS_NAME = 'dolphy';
+  _self.ELEMENT_CLASS = '.' + _self.ELEMENTS_CLASS_NAME;
 
 
 
 
 
-  var p = self.prototype;
+  var p = _self.prototype;
 
 
   p.render = function(){
@@ -44,6 +58,8 @@
     this._selectOptionOnEnter();
     this._focusOptionWithArrowKeys();
     this._focusOptionOnHover();
+
+    this._lazyLoader.listenTo( this.$optionsContainer );
 
     this._width = this.$el.width();
     this._rendered = true;
@@ -101,9 +117,13 @@
 
       if ( !$focusOn.length ) return;
 
+      var optionTop = ($focusOn.position().top - OPTION_BORDER_WIDTH),
+          currentScrollTop = _this.$optionsContainer.scrollTop(),
+          newTop = optionTop + currentScrollTop;
+
       _this._focusOption($focusOn);
       _this.$optionsContainer.animate(
-        {scrollTop: $focusOn.position().top},
+        {scrollTop: newTop},
         ANIMATION_DELAY
       );
     });
@@ -232,13 +252,21 @@
     if ( $first.length ) this._focusOption($first);
 
     this.$optionsContainer.scrollTop(0);
+    this._lazyLoader.loadImages();
   };
 
 
   p._appendOption = function(combo, url){
     var $option = $('<a>', {class: buildClasses('option'), href: '#'}),
-        $combo = $('<a>', {class: buildClasses('combo'), href: '#'}),
-        $img = $('<img>', {class: buildClasses('img'), src: url});
+        $combo = $('<a>', {class: buildClasses('combo'), href: '#'});
+
+    var $img =
+      $('<img>', {
+        class: buildClasses('img'),
+        'data-url': url,
+        src: BLANK_IMG_URL,
+        alt: combo
+      });
 
     $option.append($img);
     $option.append($combo);
@@ -292,7 +320,7 @@
     var css = 'dolphy-' + base,
         js = 'js-' + css;
 
-    return [self.ELEMENTS_CLASS_NAME, js, css].join(' ');
+    return [_self.ELEMENTS_CLASS_NAME, js, css].join(' ');
   };
 
 })( this._Dolphy );
