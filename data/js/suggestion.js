@@ -32,6 +32,8 @@
     this._rendered = false;
     this._shown = false;
     this._onSelect = null;
+
+    this._lazyLoader = new scope.LazyLoader('.js-dolphy-img');
   };
 
 
@@ -57,8 +59,7 @@
     this._focusOptionWithArrowKeys();
     this._focusOptionOnHover();
 
-    var lazyloader = new scope.Lazyloader('.js-dolphy-img');
-    lazyloader.listenTo( this.$optionsContainer );
+    this._lazyLoader.listenTo( this.$optionsContainer );
 
     this._width = this.$el.width();
     this._rendered = true;
@@ -251,6 +252,7 @@
     if ( $first.length ) this._focusOption($first);
 
     this.$optionsContainer.scrollTop(0);
+    this._lazyLoader.loadImages();
   };
 
 
